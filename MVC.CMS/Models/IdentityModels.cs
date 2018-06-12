@@ -16,6 +16,9 @@ namespace MVC.CMS.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string City { get; set; }
+        public string Country { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

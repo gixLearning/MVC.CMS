@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Data.Entity;
+using MVC.CMS.DataContexts.Initializers;
+using MVC.CMS.DataContexts;
 
 namespace MVC.CMS
 {
@@ -16,6 +19,8 @@ namespace MVC.CMS
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Database.SetInitializer<ContentDBContext>(new ContentDBInitializer());
         }
     }
 }

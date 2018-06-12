@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using MVC.CMS.DataContexts;
 using MVC.CMS.Models;
 
 namespace MVC.CMS.Controllers
@@ -17,6 +18,7 @@ namespace MVC.CMS.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ContentDBContext dBContext = new ContentDBContext();
 
         public AccountController()
         {
@@ -139,7 +141,15 @@ namespace MVC.CMS.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var model = new RegisterViewModel {
+                CountryList = dBContext.Countries.Select(c => new SelectListItem {
+                    Text = c.CountryName,
+                    Value = c.CountryID.ToString()
+                }).ToList()
+            };
+
+
+            return View(model);
         }
 
         //
@@ -151,7 +161,12 @@ namespace MVC.CMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Country = model.Country,
+                    City = model.City
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
