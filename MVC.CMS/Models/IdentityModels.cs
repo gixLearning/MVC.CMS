@@ -18,7 +18,7 @@ namespace MVC.CMS.Models
         }
 
         public string City { get; set; }
-        public string Country { get; set; }
+        public int Country { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

@@ -164,7 +164,7 @@ namespace MVC.CMS.Controllers
                 var user = new ApplicationUser {
                     UserName = model.Email,
                     Email = model.Email,
-                    Country = model.Country,
+                    Country = model.CountryId,
                     City = model.City
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
