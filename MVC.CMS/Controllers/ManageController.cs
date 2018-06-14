@@ -299,6 +299,11 @@ namespace MVC.CMS.Controllers
             });
         }
 
+        [Authorize(Roles = RoleTypes.Admin)]
+        public ActionResult ManageUsers() {
+            return PartialView();
+        }
+
         //
         // POST: /Manage/LinkLogin
         [HttpPost]

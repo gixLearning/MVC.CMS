@@ -83,5 +83,16 @@
                     }
                 }*@
         </dd>
+        @if (User.IsInRole(MVC.CMS.Models.RoleTypes.Admin)) {
+        <h4>Admin tools:</h4>
+        <dt>Role manager</dt>
+        <dd>
+            [ @Html.ActionLink("Manage", "Roles") ]
+        </dd>
+        <dt>Users</dt>
+        <dd>
+            [ @Html.ActionLink("Manage", "ManageUsers") ]
+        </dd>
+        }
     </dl>
 </div>
