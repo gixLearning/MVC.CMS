@@ -83,16 +83,41 @@
                     }
                 }*@
         </dd>
+        <dt>Users:</dt>
+        <dd>
+            [ 
+            @if(User.IsInRole(MVC.CMS.Models.RoleTypes.Admin)) { 
+                @Ajax.ActionLink("Manage", "ManageUsers",
+                    new AjaxOptions {
+                        UpdateTargetId = "result",
+                        InsertionMode = InsertionMode.Replace,
+                    })
+                 <span></span>                
+                @Ajax.ActionLink("View", "AllUsers",
+                    new AjaxOptions {
+                        UpdateTargetId = "result",
+                        InsertionMode = InsertionMode.Replace,
+                    })
+            } else {
+                @Ajax.ActionLink("View", "AllUsers",
+                    new AjaxOptions {
+                        UpdateTargetId = "result",
+                        InsertionMode = InsertionMode.Replace,
+                    })
+            }
+            ]
+        </dd>
         @if (User.IsInRole(MVC.CMS.Models.RoleTypes.Admin)) {
         <h4>Admin tools:</h4>
         <dt>Role manager</dt>
         <dd>
             [ @Html.ActionLink("Manage", "Roles") ]
         </dd>
-        <dt>Users</dt>
+        <dt>Country manager</dt>
         <dd>
-            [ @Html.ActionLink("Manage", "ManageUsers") ]
+            [ @Html.ActionLink("Manage", "Index", "Countries") ]
         </dd>
         }
     </dl>
 </div>
+<div id="result"></div>

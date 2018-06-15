@@ -1,0 +1,16 @@
+﻿@model MVC.CMS.Models.ListUsersViewModel
+
+<table class="table">
+    @*<tr>
+        <th></th>
+    </tr>*@
+
+@foreach (var item in Model.UserList) {
+    <tr>
+        <td>
+         @item.UserName
+        </td>
+    </tr>
+}
+
+</table>
