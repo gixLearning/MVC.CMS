@@ -375,6 +375,66 @@ namespace MVC.CMS.Controllers {
             return View(model);
         }
 
+        [Authorize(Roles = RoleTypes.Admin)]
+        [HttpPost, ActionName("EditUser")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmEditUser(ApplicationUser userModel) {
+            ApplicationUser user = UserManager.FindById(userModel.Id);
+
+            if(user == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //UPDATE! ALL THE THINGS! SUCH CODE! VERY DANGEROUS! WOW!
+            //         ▄              ▄
+            //        ▌▒█           ▄▀▒▌
+            //        ▌▒▒▀▄       ▄▀▒▒▒▐
+            //       ▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐
+            //     ▄▄▀▒▒▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐
+            //   ▄▀▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀██▀▒▌
+            //  ▐▒▒▒▄▄▄▒▒▒▒▒▒▒▒▒▒▒▒▒▀▄▒▒▌
+            //  ▌▒▒▐▄█▀▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐
+            // ▐▒▒▒▒▒▒▒▒▒▒▒▌██▀▒▒▒▒▒▒▒▒▀▄▌
+            // ▌▒▀▄██▄▒▒▒▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌
+            // ▌▀▐▄█▄█▌▄▒▀▒▒▒▒▒▒░░░░░░▒▒▒▐
+            //▐▒▀▐▀▐▀▒▒▄▄▒▄▒▒▒▒▒░░░░░░▒▒▒▒▌
+            //▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒░░░░░░▒▒▒▐
+            // ▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌
+            // ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▐
+            //  ▀▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄▒▒▒▒▌
+            //    ▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀
+            //   ▐▀▒▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀
+            //  ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▀
+
+            user.Email = userModel.Email;
+            user.EmailConfirmed = userModel.EmailConfirmed;
+            user.PasswordHash = userModel.PasswordHash;
+            user.SecurityStamp = userModel.SecurityStamp;
+            user.PhoneNumber = userModel.PhoneNumber;
+            user.PhoneNumberConfirmed = userModel.PhoneNumberConfirmed;
+            user.TwoFactorEnabled = userModel.TwoFactorEnabled;
+            user.LockoutEndDateUtc = userModel.LockoutEndDateUtc;
+            user.LockoutEnabled = userModel.LockoutEnabled;
+            user.AccessFailedCount = userModel.AccessFailedCount;
+            user.UserName = userModel.UserName;
+            user.City = userModel.City;
+            user.Country = userModel.Country;
+
+
+
+            try {
+                UserManager.Update(user);
+            }
+            catch (DataException ex) {
+
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+                        
+            return RedirectToAction("EditUser", new { id = user.Id });
+
+            
+        }
+
         #region Helpers
 
         // Used for XSRF protection when adding external logins

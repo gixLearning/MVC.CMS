@@ -117,6 +117,49 @@ namespace MVC.CMS.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AddCity(int countryId) {
+            var model = new City();
+            model.CountryID = countryId;
+
+            return PartialView("_AddCity", model);
+        }
+
+        [HttpPost, ActionName("AddCity")]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCityConfirm(City city) {
+            var model = new City {
+                CountryID = city.CountryID,
+                CityName = city.CityName
+            };
+
+            db.Cities.Add(city);
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = city.CountryID });
+        }
+
+
+        public ActionResult DeleteCity(int cityid) {
+
+            var city = db.Cities.Find(cityid);
+
+            if(city != null) {
+                return View(city);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+        }
+
+        [HttpPost, ActionName("DeleteCity")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteCityConfirmed(int cityid) {
+            City city = db.Cities.Find(cityid);            
+            db.Cities.Remove(city);
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = city.CountryID });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

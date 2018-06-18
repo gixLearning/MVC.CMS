@@ -6,7 +6,7 @@ using System.Data.Entity;
 using MVC.CMS.Models;
 
 namespace MVC.CMS.DataContexts.Initializers {
-    public class ContentDBInitializer : DropCreateDatabaseIfModelChanges<ContentDBContext> {
+    public class ContentDBInitializer : DropCreateDatabaseAlways<ContentDBContext> {
 
         protected override void Seed(ContentDBContext context) {
             var countries = new List<Country> {

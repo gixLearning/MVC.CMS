@@ -21,7 +21,7 @@
             <dt>Cities:</dt>
             <dd>
             @foreach (var item in Model.Cities) {
-                <span>@item.CityName</span>
+                <span>@item.CityName [@Html.ActionLink("X", "DeleteCity", new { cityid = item.CityID })]</span>
             }
             </dd>
         }
@@ -30,5 +30,12 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.CountryID }) |
+    @Ajax.ActionLink("Add new city", "AddCity", "Countries", 
+        new { countryId = Model.CountryID },
+        new AjaxOptions {
+            UpdateTargetId = "target",
+            InsertionMode = InsertionMode.Replace
+        }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<div id="target"></div>
