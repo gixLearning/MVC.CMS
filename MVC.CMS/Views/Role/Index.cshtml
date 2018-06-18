@@ -1,0 +1,38 @@
+﻿@model MVC.CMS.Models.RoleViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            User:
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.UsersWithRole) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @using (Html.BeginForm("UpdateRole", "Role")) {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <input type="hidden" name="id" id="id" value="@item.Id" />
+                    @*@Html.DropDownListFor(x=> x.SelectedRoleId, Model.RolesList,"Select")*@
+                    @Html.DropDownListFor(m => m.Role, new SelectList(Model.RolesList, "Value", "Text"), "  -----Select Role-----  ")
+                    <input type="submit" value="Save" class="btn btn-xs label-primary" />
+                }
+                </td>
+            </tr>
+    }
+
+        </table>

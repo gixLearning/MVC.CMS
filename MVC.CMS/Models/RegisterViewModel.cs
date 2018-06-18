@@ -26,6 +26,9 @@ namespace MVC.CMS.Models
         public IList<System.Web.Mvc.SelectListItem> CountryList { get; set; }
         public int CountryId { get; set; }
 
+        public IList<System.Web.Mvc.SelectListItem> CityList { get; set; }
+        public int CityId { get; set; }
+
         public string Country { get; set; }
         public string City { get; set; }
     }

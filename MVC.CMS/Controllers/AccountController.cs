@@ -145,7 +145,12 @@ namespace MVC.CMS.Controllers
                 CountryList = dBContext.Countries.Select(c => new SelectListItem {
                     Text = c.CountryName,
                     Value = c.CountryID.ToString()
+                }).ToList(),
+                CityList = dBContext.Cities.Select(c => new SelectListItem {
+                    Text = c.CityName,
+                    Value = c.CityID.ToString()
                 }).ToList()
+
             };
 
 
@@ -159,7 +164,7 @@ namespace MVC.CMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) 
             {
                 var user = new ApplicationUser {
                     UserName = model.Email,
